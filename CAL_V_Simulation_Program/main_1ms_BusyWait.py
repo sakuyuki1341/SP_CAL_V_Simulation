@@ -10,8 +10,7 @@ pin_PWM = 13	#PWM信号生成ピン
 def readfile():
 	"""SP30-0 OSHの"Sファイル"を読み取り、前処理をして返還
 	読み取った値はS_dataに文字列リストとして格納。
-	S_dataの先頭部分に含まれている余計なデータ(日時等)を削除し、
-	pwm設定値(0~1000000)に変換。
+	S_dataの先頭部分に含まれている余計なデータ(日時等)を削除。
 	最終的にS_data_processedに整数型リストとして格納。返す。
 	"""
 	# todo: SP30-0 OSHのSファイルかどうかの確かめをする処理を追加
@@ -31,25 +30,17 @@ def readfile():
 
 	# 前処理の実行
 	S_data = S_data[3:]
-	"""
-	## s_dataを整数型に変換
-	S_data_len = len(S_data)
-	S_data_processed = []
-	for i in range(0, S_data_len - 1):
-		### アナログ値が0~1023なので、1,000,000 ÷ 1023 = 977 を使用
-		S_data_processed.append(977*int(S_data[i]))
-	"""
 	## 文字列リストから整数リストへ
 	S_data_i = [int(s) for s in S_data]
 
 	print('reading completed')
-	#return S_data
 	return S_data_i
 
 if __name__ == "__main__":
 	pi = pigpio.pi()
 	pi.set_mode(pin_PWM, pigpio.OUTPUT)
 	pi.set_PWM_frequency(pin_PWM, 40000)
+        # Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
 	pi.set_PWM_range(pin_PWM, 1023)
 
 	# Sファイルの読み込み
