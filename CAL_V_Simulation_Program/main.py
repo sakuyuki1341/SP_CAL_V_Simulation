@@ -6,26 +6,28 @@ import os
 import sys
 
 pin_PWM = 13	#PWM信号生成ピン
+PWM_FREQ = 40000	#PWM信号の周波数
+PWM_RANGE = 1023	#PWM信号の分解能
 
 def readfile():
 	"""SP30-0 OSHの"Sファイル"を読み取り、前処理をして返還
 	読み取った値はS_dataに文字列リストとして格納。
 	S_dataの先頭部分に含まれている余計なデータ(日時等)を削除。
-	最終的にS_data_processedに整数型リストとして格納。返す。
+	最終的にS_data_iに整数型リストとして格納。返す。
 	"""
 	# todo: SP30-0 OSHのSファイルかどうかの確かめをする処理を追加
 
 	# ファイルの読み込み
 	print('select using file')
-	print(os.listdir('../Data_folder'))
+	print(os.listdir('/home/pi/SPL/CAL_V_Simulation/Data_folder'))
 	S_filename = input().strip()
 	# ファイルが存在しなければ異常終了
-	if (os.path.exists('../Data_folder/' + S_filename) == False):
+	if (os.path.exists('/home/pi/SPL/CAL_V_Simulation/Data_folder/' + S_filename) == False):
 		print('the file dose not exist (' + S_filename + ')')
 		sys.exit(1)
 	
 	print('reading file. wait a minute.')
-	f = open('../Data_folder/' + S_filename)
+	f = open('/home/pi/SPL/CAL_V_Simulation/Data_folder/' + S_filename)
 	S_data = f.readlines()
 
 	# 前処理の実行
@@ -39,9 +41,9 @@ def readfile():
 if __name__ == "__main__":
 	pi = pigpio.pi()
 	pi.set_mode(pin_PWM, pigpio.OUTPUT)
-	pi.set_PWM_frequency(pin_PWM, 40000)
-        # Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
-	pi.set_PWM_range(pin_PWM, 1023)
+	pi.set_PWM_frequency(pin_PWM, PWM_FREQ)
+	# Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
+	pi.set_PWM_range(pin_PWM, PWM_RANGE)
 
 	# Sファイルの読み込み
 	S_data = readfile()
