@@ -6,8 +6,6 @@ import os
 import sys
 
 pin_PWM = 13	#PWM信号生成ピン
-PWM_FREQ = 40000	#PWM信号の周波数
-PWM_RANGE = 1023	#PWM信号の分解能
 
 def readfile():
 	"""SP30-0 OSHの"Sファイル"を読み取り、前処理をして返還
@@ -41,9 +39,10 @@ def readfile():
 if __name__ == "__main__":
 	pi = pigpio.pi()
 	pi.set_mode(pin_PWM, pigpio.OUTPUT)
-	pi.set_PWM_frequency(pin_PWM, PWM_FREQ)
+	pi.set_PWM_frequency(pin_PWM, 40000)
 	# Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
-	pi.set_PWM_range(pin_PWM, PWM_RANGE)
+	pi.set_PWM_range(pin_PWM, 1023)
+	pi.set_PWM_dutycycle(pin_PWM, 0)
 
 	# Sファイルの読み込み
 	S_data = readfile()
@@ -68,5 +67,5 @@ if __name__ == "__main__":
 			
 			#print(time.time())		#時間のズレ確認用に使用
 			pi.set_PWM_dutycycle(pin_PWM, int(sending_data))
-			## 処理の開始時間を記録
-			time_start = time.time()
+			## 次の再生時間を計算
+			time_start = time_start + 0.001
