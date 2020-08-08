@@ -18,7 +18,7 @@ Wire Wire Line
 Wire Wire Line
 	6600 3850 6600 3950
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SK4017_Q_-LibraryLoader Q4
+L LibraryLoader:2SK4017_Q_ Q4
 U 1 1 5E7ED628
 P 7900 3950
 F 0 "Q4" H 8728 3896 50  0000 L CNN
@@ -54,7 +54,7 @@ Wire Wire Line
 Wire Wire Line
 	7800 3750 7800 3950
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SJ681_Q_-LibraryLoader Q5
+L LibraryLoader:2SJ681_Q_ Q5
 U 1 1 5E846E27
 P 7150 3050
 F 0 "Q5" H 7978 2996 50  0000 L CNN
@@ -73,7 +73,7 @@ F 11 "" H 8000 2250 50  0001 L CNN "RS Price/Stock"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SK4017_Q_-LibraryLoader Q6
+L LibraryLoader:2SK4017_Q_ Q6
 U 1 1 5E846E35
 P 7800 3050
 F 0 "Q6" H 8628 2996 50  0000 L CNN
@@ -174,7 +174,7 @@ F 3 "~" H 8700 3450 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SJ681_Q_-LibraryLoader Q1
+L LibraryLoader:2SJ681_Q_ Q1
 U 1 1 5E7E2107
 P 5950 3950
 F 0 "Q1" H 6778 3896 50  0000 L CNN
@@ -195,7 +195,7 @@ $EndComp
 Wire Wire Line
 	7150 3750 7800 3750
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SJ681_Q_-LibraryLoader Q3
+L LibraryLoader:2SJ681_Q_ Q3
 U 1 1 5E7ED61A
 P 7250 3950
 F 0 "Q3" H 8078 3896 50  0000 L CNN
@@ -214,7 +214,7 @@ F 11 "" H 8100 3150 50  0001 L CNN "RS Price/Stock"
 	0    1    1    0   
 $EndComp
 $Comp
-L CAL_V_Simulation_circuit-rescue:2SK4017_Q_-LibraryLoader Q2
+L LibraryLoader:2SK4017_Q_ Q2
 U 1 1 5E7E3E4A
 P 6600 3950
 F 0 "Q2" H 7428 3896 50  0000 L CNN
