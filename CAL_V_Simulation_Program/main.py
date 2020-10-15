@@ -39,7 +39,7 @@ def readfile():
 if __name__ == "__main__":
 	pi = pigpio.pi()
 	pi.set_mode(pin_PWM, pigpio.OUTPUT)
-	pi.set_PWM_frequency(pin_PWM, 40000)
+	pi.set_PWM_frequency(pin_PWM, 5000)
 	# Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
 	pi.set_PWM_range(pin_PWM, 1023)
 	pi.set_PWM_dutycycle(pin_PWM, 0)
@@ -57,7 +57,9 @@ if __name__ == "__main__":
 		## todo: この埋める処理を、事前に別関数で２次近似するなどしてもいいかもしれない
 		for j in range(0, 3):
 			## 送信データの計算
-			sending_data = (S_data[i + 1] - S_data[i])/4 *j + S_data[i]
+			sending_data = (S_data[i + 1] - S_data[i])/4.00 *j + S_data[i]
+			sending_data = sending_data * 50 / 100
+			#print(str(time_start) + " : " + str(sending_data))		#時間のズレ確認用に使用
 			## BusyWaitを使って1ms待機
 			while True:
 				time_now = time.time()
@@ -65,7 +67,6 @@ if __name__ == "__main__":
 					break
 			## memo: BusyWait以外の手法(time.sleep, thread, signal)を試したが、それらは安定しなかった。
 			
-			#print(time.time())		#時間のズレ確認用に使用
 			pi.set_PWM_dutycycle(pin_PWM, int(sending_data))
 			## 次の再生時間を計算
 			time_start = time_start + 0.001
