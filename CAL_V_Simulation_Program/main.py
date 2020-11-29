@@ -39,7 +39,7 @@ def readfile():
 if __name__ == "__main__":
 	pi = pigpio.pi()
 	pi.set_mode(pin_PWM, pigpio.OUTPUT)
-	pi.set_PWM_frequency(pin_PWM, 5000)
+	pi.set_PWM_frequency(pin_PWM, 8000)
 	# Sファイルのデータは0~1023の値をとるため、rangeの第二引数は1023とする
 	pi.set_PWM_range(pin_PWM, 1023)
 	pi.set_PWM_dutycycle(pin_PWM, 0)
@@ -55,11 +55,14 @@ if __name__ == "__main__":
 		## 1ms間隔にするために、元々は4ms間隔のデータの間を埋める
 		## 処理速度維持のため、間を埋めたい2データ間を直線とみなし、計算する。(2次近似などは行わない)
 		## todo: この埋める処理を、事前に別関数で２次近似するなどしてもいいかもしれない
-		for j in range(0, 3):
+
+		## 現在、4ms毎のファイル(SP30のファイル)ではなく20ms毎のファイル(SP38のファイル)を読む機会が多く、
+		## それに対応して一部数値を変更してあります。SP30のファイルを読む際は気をつけてください。
+		for j in range(20):		#4ms毎のファイルの場合、ココをrange(4)へ変更
 			## 送信データの計算
-			sending_data = (S_data[i + 1] - S_data[i])/4.00 *j + S_data[i]
-			sending_data = sending_data * 50 / 100
-			#print(str(time_start) + " : " + str(sending_data))		#時間のズレ確認用に使用
+			sending_data = (S_data[i + 1] - S_data[i])/20.00 *j + S_data[i]		#4ms毎のファイルの場合、20.0を4.0へ変更
+			#最大値での出力を行うとデータが振り切れるため、制限を行う。
+			sending_data = sending_data / 6
 			## BusyWaitを使って1ms待機
 			while True:
 				time_now = time.time()
